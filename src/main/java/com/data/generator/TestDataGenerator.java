@@ -32,14 +32,12 @@ public class TestDataGenerator {
      */
     public void generate(String schemaPath, String outputPath, String format) throws IOException {
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        Map<String, Object> schema = objectMapper.readValue(
-                getClass().getResourceAsStream(schemaPath),
-                new TypeReference<Map<String, Object>>() {}
-        );
+        SchemaParser schemaParser = new SchemaParser();
+        Map<String, Object> schema = schemaParser.parseSchema(schemaPath);
 
-        List<Map<String, Object>> fields = objectMapper.convertValue(schema.get("fields"),
-                new TypeReference<List<Map<String, Object>>>() {});
+        List<Map<String, Object>> fields = new ObjectMapper()
+                .convertValue(schema.get("fields"),
+                new TypeReference<List<Map<String, Object>>>(){});
 
         int rows = (int) schema.get("rows");
 

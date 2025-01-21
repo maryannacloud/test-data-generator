@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="be982ec8-3679-40ce-899a-ca5894d76e42" name="Changes" comment="more methods added">
+    <list default="true" id="be982ec8-3679-40ce-899a-ca5894d76e42" name="Changes" comment="fixed warnings and added some type safety, new dependencies added as well">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/data/generator/SchemaParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/data/generator/SchemaParser.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/data/generator/TestDataGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/data/generator/TestDataGenerator.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -36,12 +37,22 @@
     &quot;assignee&quot;: &quot;maryannacloud&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/maryannacloud/test-data-generator.git&quot;,
-    &quot;accountId&quot;: &quot;f30c5fc1-3dd2-4d15-8242-aa8f51494b61&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/maryannacloud/test-data-generator.git",
+    "accountId": "f30c5fc1-3dd2-4d15-8242-aa8f51494b61"
+  },
+  "recentNewPullRequestHead": {
+    "server": {
+      "useHttp": false,
+      "host": "github.com",
+      "port": null,
+      "suffix": null
+    },
+    "owner": "maryannacloud",
+    "repository": "test-data-generator"
   }
-}</component>
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 3
 }</component>
@@ -56,7 +67,7 @@
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "data-generator",
+    "git-widget-placeholder": "#2 on data-generator",
     "kotlin-language-version-configured": "true",
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.0",
@@ -89,7 +100,15 @@
       <option name="project" value="LOCAL" />
       <updated>1737436908903</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="fixed warnings and added some type safety, new dependencies added as well">
+      <option name="closed" value="true" />
+      <created>1737440719486</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1737440719486</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -106,6 +125,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="created project structure and added data generation methods" />
     <MESSAGE value="more methods added" />
-    <option name="LAST_COMMIT_MESSAGE" value="more methods added" />
+    <MESSAGE value="fixed warnings and added some type safety, new dependencies added as well" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed warnings and added some type safety, new dependencies added as well" />
   </component>
 </project>
