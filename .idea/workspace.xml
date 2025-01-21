@@ -4,8 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="be982ec8-3679-40ce-899a-ca5894d76e42" name="Changes" comment="created project structure and added data generation methods">
+    <list default="true" id="be982ec8-3679-40ce-899a-ca5894d76e42" name="Changes" comment="more methods added">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/data/generator/TestDataGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/data/generator/TestDataGenerator.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -57,6 +58,9 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "data-generator",
     "kotlin-language-version-configured": "true",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
     "settings.editor.selected.configurable": "preferences.pluginManager"
   }
 }]]></component>
@@ -77,7 +81,15 @@
       <option name="project" value="LOCAL" />
       <updated>1737434780698</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="more methods added">
+      <option name="closed" value="true" />
+      <created>1737436908903</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1737436908903</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -93,6 +105,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="created project structure and added data generation methods" />
-    <option name="LAST_COMMIT_MESSAGE" value="created project structure and added data generation methods" />
+    <MESSAGE value="more methods added" />
+    <option name="LAST_COMMIT_MESSAGE" value="more methods added" />
   </component>
 </project>
