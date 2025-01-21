@@ -107,9 +107,8 @@ public class TestDataGenerator {
     }
 
     private void writeJson(List<Map<String, Object>> data, String outputPath) throws IOException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File(outputPath), data);
-        System.out.printf("JSON data written to: %s", outputPath);
+        JSONWriter jsonWriter = new JSONWriter();
+        jsonWriter.writeToFile(data, outputPath);
     }
 
     private void writeCsv(List<Map<String, Object>> data, String outputPath, List<Map<String, Object>> fields)
