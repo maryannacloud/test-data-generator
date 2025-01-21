@@ -1,9 +1,13 @@
 package com.data.generator;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.javafaker.Faker;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -13,6 +17,8 @@ import java.util.List;
 import java.util.Map;
 
 public class TestDataGenerator {
+
+    private static final Logger logger = LoggerFactory.getLogger(TestDataGenerator.class);
 
     private final Faker faker = new Faker();
 
@@ -27,20 +33,24 @@ public class TestDataGenerator {
     public void generate(String schemaPath, String outputPath, String format) throws IOException {
 
         ObjectMapper objectMapper = new ObjectMapper();
-        Map<String, Object> schema = objectMapper.readValue(getClass().getResourceAsStream(schemaPath), Map.class);
+        Map<String, Object> schema = objectMapper.readValue(
+                getClass().getResourceAsStream(schemaPath),
+                new TypeReference<Map<String, Object>>() {}
+        );
 
+        List<Map<String, Object>> fields = objectMapper.convertValue(schema.get("fields"),
+                new TypeReference<List<Map<String, Object>>>() {});
 
-        List<Map<String, Object>> fields = (List<Map<String, Object>>) schema.get("fields");
         int rows = (int) schema.get("rows");
 
         List<Map<String, Object>> data = generateData(fields, rows);
 
         if ("json".equalsIgnoreCase(format)) {
             writeJson(data, outputPath);
-        } else if ("scv".equalsIgnoreCase(format)) {
+        } else if ("csv".equalsIgnoreCase(format)) {
             writeCsv(data, outputPath, fields);
         } else {
-            throw new IllegalArgumentException("Unsupported format: " + format);
+            throw new IllegalArgumentException(String.format("Unsupported format: %s", format));
         }
     }
 
@@ -57,13 +67,13 @@ public class TestDataGenerator {
                 String type = (String) field.get("type");
 
                 switch (type) {
-                    case "string" -> record.put(name, generateString(field));
-                    case "integer" -> record.put(name, generateInteger(field));
-                    case "boolean" -> record.put(name, faker.bool().bool());
-                    default -> throw new IllegalArgumentException("Unsupported field type: " + type);
+                    case "string" -> row.put(name, generateString(field));
+                    case "integer" -> row.put(name, generateInteger(field));
+                    case "boolean" -> row.put(name, faker.bool().bool());
+                    default -> throw new IllegalArgumentException(String.format("Unsupported field type: %s", type));
                 }
             }
-            data.add(record);
+            data.add(row);
         }
         return data;
     }
@@ -81,10 +91,9 @@ public class TestDataGenerator {
                         .getMethod(parts[1])
                         .invoke(faker.getClass().getMethod(parts[0]).invoke(faker));
             } catch (Exception e) {
-                throw new RuntimeException("Invalid Faker key: " + fakerKey, e);
+                throw new RuntimeException(String.format("Invalid Faker key: %s", fakerKey), e);
             }
         }
-        // Fallback to a random string
         return faker.lorem().word();
     }
 
@@ -102,17 +111,17 @@ public class TestDataGenerator {
     private void writeJson(List<Map<String, Object>> data, String outputPath) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File(outputPath), data);
-        System.out.println("JSON data written to " + outputPath);
+        System.out.printf("JSON data written to: %s", outputPath);
     }
 
     private void writeCsv(List<Map<String, Object>> data, String outputPath, List<Map<String, Object>> fields)
             throws IOException {
         try (FileWriter writer = new FileWriter(outputPath);
-             CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT.withHeader(getHeaders(fields)))) {
+             CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT.builder().setHeader(getHeaders(fields)).build())) {
             for (Map<String, Object> record : data) {
                 csvPrinter.printRecord(record.values());
             }
-            System.out.println("CSV data written to " + outputPath);
+            System.out.printf("CSV data written to: %s", outputPath);
         }
     }
 
@@ -131,8 +140,7 @@ public class TestDataGenerator {
             generator.generate(schemaPath, csvOutputPath, "csv");
 
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("An error occurred while generating test data", e);
         }
     }
-
 }
