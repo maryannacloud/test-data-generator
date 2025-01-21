@@ -1,0 +1,41 @@
+{
+  "fields": [
+    {
+      "name": "id",
+      "type": "integer",
+      "min": 1,
+      "max": 1000
+    },
+    {
+      "name": "firstName",
+      "type": "string",
+      "faker": "name.firstName"
+    },
+    {
+      "name": "lastName",
+      "type": "string",
+      "faker": "name.lastName"
+    },
+    {
+      "name": "email",
+      "type": "string",
+      "faker": "internet.email"
+    },
+    {
+      "name": "age",
+      "type": "integer",
+      "min": 18,
+      "max": 65
+    },
+    {
+      "name": "isActive",
+      "type": "boolean"
+    },
+    {
+      "name": "createdDate",
+      "type": "date",
+      "format": "yyyy-MM-dd"
+    }
+  ],
+  "rows": 100
+}
