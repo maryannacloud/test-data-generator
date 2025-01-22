@@ -1,4 +1,4 @@
-package com.data.generator;
+package com.generator;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;

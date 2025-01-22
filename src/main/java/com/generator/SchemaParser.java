@@ -1,4 +1,4 @@
-package com.data.generator;
+package com.generator;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
