@@ -11,6 +11,9 @@ target/
 *.iws
 *.iml
 *.ipr
+.idea/workspace.xml
 
-workspace.xml
+### Patch Files ###
+*.xml
+*.patch
 

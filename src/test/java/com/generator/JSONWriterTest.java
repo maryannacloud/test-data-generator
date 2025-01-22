@@ -1,4 +1,4 @@
-package com.data.generator;
+package com.generator;
 
 public class JSONWriterTest {
 }
