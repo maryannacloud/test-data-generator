@@ -111,15 +111,9 @@ public class TestDataGenerator {
         jsonWriter.writeToFile(data, outputPath);
     }
 
-    private void writeCsv(List<Map<String, Object>> data, String outputPath, List<Map<String, Object>> fields)
-            throws IOException {
-        try (FileWriter writer = new FileWriter(outputPath);
-             CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT.builder().setHeader(getHeaders(fields)).build())) {
-            for (Map<String, Object> record : data) {
-                csvPrinter.printRecord(record.values());
-            }
-            System.out.printf("CSV data written to: %s", outputPath);
-        }
+    private void writeCsv(List<Map<String, Object>> data, String outputPath, List<Map<String, Object>> fields) throws IOException {
+        CSVWriter csvWriter = new CSVWriter();
+        csvWriter.writeToFile(data, outputPath, getHeaders(fields));
     }
 
     private String[] getHeaders(List<Map<String, Object>> fields) {
