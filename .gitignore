@@ -12,5 +12,7 @@ target/
 *.iml
 *.ipr
 
-workspace.xml
+### Patch Files ###
+*.xml
+*.patch
 
