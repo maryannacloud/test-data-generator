@@ -56,4 +56,10 @@ public class SchemaParser {
             throw new IllegalArgumentException("Invalid schema: 'rows' key is missing or not an Integer.");
         }
     }
+
+    @SuppressWarnings("unchecked")
+    public List<Map<String, Object>> getFields(String schemaPath) throws IOException {
+        Map<String, Object> schema = parseSchema(schemaPath);
+        return (List<Map<String, Object>>) schema.get("fields");
+    }
 }
