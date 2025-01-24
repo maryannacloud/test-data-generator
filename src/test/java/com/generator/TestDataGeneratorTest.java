@@ -3,6 +3,8 @@ package com.generator;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,6 +14,8 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TestDataGeneratorTest {
+
+    private static final Logger logger = LoggerFactory.getLogger(TestDataGeneratorTest.class);
 
     private TestDataGenerator testDataGenerator;
 
@@ -29,50 +33,64 @@ public class TestDataGeneratorTest {
     public void testGeneratedDataMatchesSchema() throws IOException {
 
         SchemaParser schemaParser = new SchemaParser();
-        List<Map<String, Object>> fields = schemaParser.parseSchema("src/main/resources/schema.json");
+        List<Map<String, Object>> fields = schemaParser.getFields("src/main/resources/schema.json");
 
-        List<Map<String, Object>> data = testDataGenerator.generateData(fields, 5);
+        Map<String, Object> schema = schemaParser.parseSchema("src/main/resources/schema.json");
+        int rows = (int) schema.get("rows");
 
-        // Validate the schema
+        List<Map<String, Object>> data = testDataGenerator.generateData(fields, rows);
+
         assertNotNull(data, "Generated data should not be null.");
         assertFalse(data.isEmpty(), "Generated data should not be empty.");
 
-        // Validate each row matches schema columns (e.g., 4 columns in schema.json)
-        int expectedColumnCount = 4; // Replace with the actual column count from your schema
+        int expectedColumnCount = fields.size();
         for (Map<String, Object> row : data) {
             assertEquals(expectedColumnCount, row.size(), "Row does not match schema column count.");
         }
-
     }
 
     @Test
-    public void testGeneratedDataTypes() {
-        // Generate test data
-        List<String[]> data = testDataGenerator.generateData("schema.json", 5);
+    public void testGeneratedDataTypes() throws IOException {
+        SchemaParser schemaParser = new SchemaParser();
+        Map<String, Object> schema = schemaParser.parseSchema("src/main/resources/schema.json");
 
-        // Validate data types (assuming schema.json specifies types for each column)
-        for (String[] row : data) {
-            // Replace column indexes with actual schema-defined column indexes
-            assertDoesNotThrow(() -> Integer.parseInt(row[0]), "ID column should be an integer.");
-            assertNotNull(row[1], "Name column should not be null."); // Assuming name is a string
-            assertDoesNotThrow(() -> Boolean.parseBoolean(row[2]), "Active column should be a boolean.");
+        @SuppressWarnings("unchecked")
+        List<Map<String, Object>> fields = (List<Map<String, Object>>) schema.get("fields");
+        int rows = (int) schema.get("rows");
+
+        List<Map<String, Object>> data = testDataGenerator.generateData(fields, rows);
+
+        for (Map<String, Object> row : data) {
+            for (Map<String, Object> field : fields) {
+                String columnName = (String) field.get("name");
+                String columnType = (String) field.get("type");
+
+                Object value = row.get(columnName);
+
+                switch (columnType) {
+                    case "string" -> assertInstanceOf(String.class, value,
+                            String.format("%s should be a string.", columnName));
+                    case "integer" -> assertInstanceOf(Integer.class, value,
+                            String.format("%s should be an integer.", columnName));
+                    case "boolean" -> assertInstanceOf(Boolean.class, value,
+                            String.format("%s should be a boolean.", columnName));
+                    default -> fail(String.format("Unsupported type: %s.", columnType));
+                }
+            }
         }
     }
 
     @Test
-    public void testGenerateDataFile() {
-        // Generate data and save to file
+    public void testGeneratedDataFile() throws IOException {
         String filePath = "test_data.csv";
-        testDataGenerator.generateDataFile("schema.json", 10, filePath);
+        testDataGenerator.generateDataFile("src/main/resources/schema.json", 10, filePath);
 
-        // Verify the file exists
         File file = new File(filePath);
         assertTrue(file.exists(), "Generated data file should exist.");
-
-        // Verify file is not empty
         assertTrue(file.length() > 0, "Generated data file should not be empty.");
 
-        // Clean up
-        file.delete();
+        if (!file.delete()) {
+            logger.warn("Failed to delete file: {}", file.getAbsolutePath());
+        }
     }
 }
