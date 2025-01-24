@@ -48,7 +48,7 @@ public class TestDataGenerator {
         }
     }
 
-    private List<Map<String, Object>> generateData(List<Map<String, Object>> fields, int rows) {
+    public List<Map<String, Object>> generateData(List<Map<String, Object>> fields, int rows) {
 
         List<Map<String, Object>> data = new ArrayList<>();
 
