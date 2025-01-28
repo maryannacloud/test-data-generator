@@ -4,17 +4,15 @@ The Test Data Generator library is a lightweight, configurable tool for generati
 
 Features
 
-Schema-Based Configuration: Define fields, data types, and constraints via simple configuration files (JSON).
+1. Schema-Based Configuration (define fields, data types, and constraints via simple configuration files (JSON)).
 
-Multiple Output Formats: Generate data in JSON and CSV formats.
+2. Multiple Output Formats (generate data in JSON and CSV formats).
 
-Randomized Data Generation: Uses Java Faker to generate realistic random data.
+3. Randomized Data Generation (uses Java Faker to generate realistic random data).
 
-Flexible Row Counts: Specify the number of rows to generate.
+4. Flexible Row Counts (specify the number of rows to generate).
 
-Extensible Design: Easily add support for more formats or custom field generators.
-
-Installation
+5. Extensible Design (easily add support for more formats or custom field generators).
 
 Prerequisites
 

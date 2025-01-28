@@ -48,7 +48,7 @@ public class TestDataGenerator {
         }
     }
 
-    private List<Map<String, Object>> generateData(List<Map<String, Object>> fields, int rows) {
+    public List<Map<String, Object>> generateData(List<Map<String, Object>> fields, int rows) {
 
         List<Map<String, Object>> data = new ArrayList<>();
 
@@ -70,6 +70,27 @@ public class TestDataGenerator {
             data.add(row);
         }
         return data;
+    }
+
+    public void generateDataFile(String schemaPath, int rows, String outputPath) throws IOException {
+        // Parse schema and extract fields
+        SchemaParser schemaParser = new SchemaParser();
+        Map<String, Object> schema = schemaParser.parseSchema(schemaPath);
+
+        @SuppressWarnings("unchecked")
+        List<Map<String, Object>> fields = (List<Map<String, Object>>) schema.get("fields");
+
+        // Generate data
+        List<Map<String, Object>> data = generateData(fields, rows);
+
+        // Determine output format
+        String format = outputPath.substring(outputPath.lastIndexOf('.') + 1).toLowerCase();
+
+        switch (format) {
+            case "json" -> writeJson(data, outputPath);
+            case "csv" -> writeCsv(data, outputPath, fields);
+            default -> throw new IllegalArgumentException(String.format("Unsupported format: %s", format));
+        }
     }
 
     private String generateString(Map<String, Object> field) {
